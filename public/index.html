@@ -24,8 +24,21 @@
 
 
 <script>
-    function call() {
+    async function call() {
 
+        const semesterValue = document.getElementById("semes").value;
+        
+        const semester = {
+            sem : semesterValue
+        }
+
+        const response = await fetch('http://localhost:3000/fetch-grades', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(semester)
+          });
     }
     
 </script>
