@@ -19,7 +19,7 @@
 
             <input type = "submit" value="Click me" onclick = call()>
             
-         
+            <p id = "demo"> ey </p>
    
 
 
@@ -32,6 +32,8 @@
             sem : semesterValue
         }
 
+        const UImessage = document.getElementById("demo"); 
+
         const response = await fetch('http://localhost:3000/fetch-grades', {
             method: 'POST',
             headers: {
@@ -39,6 +41,33 @@
             },
             body: JSON.stringify(semester)
           });
+
+
+          if(!response.ok) {
+            UImessage.innerHTML = "There was an error.";
+            return;
+          }
+          
+          const data = await response.json();
+          console.log(data);
+
+          
+          let listofMessages = [];
+
+          for(let i=0;i<data.length;i++)
+          {
+            if(data[i].isPassed === true)
+            {
+                const msg = `Subject ${data[i].subject} is passed\n`;
+            }
+            else
+            {
+                const msg = `Subject ${data[i].subject} is not passed\n`;
+            }
+
+            listofMessages.push(msg);
+          }
+          UImessage.innerHTML = listofMessages;
     }
     
 </script>
