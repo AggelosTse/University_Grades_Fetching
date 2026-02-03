@@ -12,7 +12,7 @@ app.post('/fetch-grades', async (req, res) => {
 
     const semesterChosen = Number(req.body.sem);
 
-    const freshID = await getFreshCookie("PRIVATE INFO", "PRIVATE INFO");
+    const freshID = await getFreshCookie("PRIVATE NAME", "PRIVATE PASSWORD");
 
     if (freshID) {
         const data = await getData(semesterChosen, freshID);

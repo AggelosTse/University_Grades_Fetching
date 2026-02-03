@@ -1,4 +1,4 @@
-import storeToDB from "./dbStore.js";
+import connectDB from "./connectDB.js";
 
 export default async function getData(semester,fetchID) {
     const response = await fetch('https://classweb.uoi.gr/feign/student/grades/diploma', {
@@ -27,7 +27,7 @@ export default async function getData(semester,fetchID) {
         ispassed1.push(dataFile[i].isPassed);
     }
 
-    await storeToDB(subjects1,ispassed1,dataFile);
+    await connectDB(subjects1,ispassed1,dataFile.length);
 
     const subjects = [];
     const ispassed = [];
