@@ -1,12 +1,14 @@
-export default async function getData(semester) {
+import storeToDB from "./dbStore.js";
+
+export default async function getData(semester,fetchID) {
     const response = await fetch('https://classweb.uoi.gr/feign/student/grades/diploma', {
       method: 'GET',
       headers: {
         
-                "Cookie": "JSESSIONID= PRIVATE INFO", 
+                "Cookie": `JSESSIONID=${fetchID}`, 
                 "Accept": "application/json",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Firefox/122.0",
-                "Referer": "https://classweb.uoi.gr/student/grades/list_diploma?p=ECC5DCC9-A5C9-4BEB-B553-84D0EB563432661E37A9-E4F2-4F57-BCBD-6AA016CEDEFF",
+                "Referer": "https://classweb.uoi.gr/student/grades",
                 "X-Requested-With": "XMLHttpRequest"
       },
     
@@ -16,7 +18,17 @@ export default async function getData(semester) {
     }
 
     const dataFile = await response.json();
-  
+    let subjects1 = [];
+    let ispassed1 = [];
+
+    for(let i=0;i<dataFile.length;i++)
+    {
+        subjects1.push(dataFile[i].title);
+        ispassed1.push(dataFile[i].isPassed);
+    }
+
+    await storeToDB(subjects1,ispassed1,dataFile);
+
     const subjects = [];
     const ispassed = [];
 
@@ -44,5 +56,6 @@ export default async function getData(semester) {
         i++;
     }
     
+
     return arrayOfObjects; 
 }

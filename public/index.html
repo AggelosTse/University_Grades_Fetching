@@ -10,10 +10,10 @@
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-              <option value="5">4</option>
-              <option value="6">4</option>
-              <option value="7">4</option>
-              <option value="8">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
 
             </select> 
 
@@ -56,19 +56,20 @@
 
           for(let i=0;i<data.length;i++)
           {
-            if(data[i].isPassed === true)
+            let msg;
+            if(data[i].ispassed === true)
             {
-                const msg = `Subject ${data[i].subject} is passed\n`;
+                msg = `Subject ${data[i].subject} is passed\n`;
             }
             else
             {
-                const msg = `Subject ${data[i].subject} is not passed\n`;
+                msg = `Subject ${data[i].subject} is not passed\n`;
             }
 
             listofMessages.push(msg);
           }
-          UImessage.innerHTML = listofMessages;
-    }
+          UImessage.innerHTML = listofMessages.join('<br>');    
+        }
     
 </script>
 </body>

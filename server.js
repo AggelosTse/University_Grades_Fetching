@@ -1,5 +1,6 @@
 import express from 'express';
 import getData  from './dataFetcher.js';
+import getFreshCookie  from './getCookie.js';
 
 const app = express();
 
@@ -11,9 +12,14 @@ app.post('/fetch-grades', async (req, res) => {
 
     const semesterChosen = Number(req.body.sem);
 
-    const data = await getData(semesterChosen);
+    const freshID = await getFreshCookie("PRIVATE INFO", "PRIVATE INFO");
 
-    res.json(data);
+    if (freshID) {
+        const data = await getData(semesterChosen, freshID);
+        res.json(data);
+    } else {
+        res.status(500).json({ error: "Login failed" });
+    }
 
 })
 
