@@ -1,4 +1,4 @@
-import connectDB from "./connectDB.js";
+import connecttoDB from "./connectDB.js";
 
 export default async function getData(semester,fetchID) {
     const response = await fetch('https://classweb.uoi.gr/feign/student/grades/diploma', {
@@ -18,44 +18,18 @@ export default async function getData(semester,fetchID) {
     }
 
     const dataFile = await response.json();
-    let subjects1 = [];
-    let ispassed1 = [];
+    let subjects = [];
+    let ispassed = [];
 
     for(let i=0;i<dataFile.length;i++)
     {
-        subjects1.push(dataFile[i].title);
-        ispassed1.push(dataFile[i].isPassed);
+        subjects.push(dataFile[i].title);
+        ispassed.push(dataFile[i].isPassed);
     }
 
-    await connectDB(subjects1,ispassed1,dataFile.length);
+    await connecttoDB(subjects,ispassed,dataFile.length);
 
-    const subjects = [];
-    const ispassed = [];
-
-    for(let i=0;i<dataFile.length;i++)
-    {
-        if(dataFile[i].studentSemester === semester)
-        {
-            subjects.push(dataFile[i].title);
-            ispassed.push(dataFile[i].isPassed);
-        }
-    }
-
-    const arrayOfObjects = [];
-    
-    let i=0;
-
-    while(i<subjects.length) {
-        const tempjson = {
-            subject : subjects[i],
-            ispassed : ispassed[i]
-        }
-
-        arrayOfObjects.push(tempjson);
-        console.log(arrayOfObjects);
-        i++;
-    }
-    
+   
 
     return arrayOfObjects; 
 }

@@ -1,8 +1,9 @@
 import sqlite3 from 'sqlite3';
 
 import insertData from './insertDB.js';
+import checkingDiff from './checkingDifferenceDB.js';
 
-export default async function connectDB(subjects,ispassed,dataLength)
+export default async function connecttoDB(subjects,ispassed,dataLength)
 {
     
     const db = new sqlite3.Database('./grades.db');
@@ -16,21 +17,14 @@ export default async function connectDB(subjects,ispassed,dataLength)
         if (row.count === 0) {
           
             await insertData(subjects,ispassed,dataLength);
+
         } else {
-            await checkForDifferences(subjects,ispassed,dataLength);
+
+            await checkingDiff(subjects,ispassed,dataLength);
         }
     });
 
 
-    const insert = db.prepare('INSERT INTO uni_grades (subject, passed) VALUES (?, ?)');
-
-    for(let i=0;i<dataFile.length;i++) {
-
-        insert.run(subjects[i], ispassed[i]);
-    }
-    insert.finalize();
-    console.log("success");
-    
 }
 
 

@@ -17,7 +17,8 @@ app.post('/fetch-grades', async (req, res) => {
     if (freshID) {
         const data = await getData(semesterChosen, freshID);
         res.json(data);
-    } else {
+    } 
+    else {
         res.status(500).json({ error: "Login failed" });
     }
 
