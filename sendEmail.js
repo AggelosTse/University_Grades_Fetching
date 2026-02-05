@@ -1,13 +1,13 @@
 import nodemailer from 'nodemailer';
 
-export default async function emailsend(subjectpassed,newSubjectPassed)
+export default async function emailsend(subjectpassed,newSubjectPassed, email)
 {
 
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'private mail@gmail.com',
-        pass: 'private pass'
+        user: '',
+        pass: ''
       }
     });
     
@@ -16,8 +16,8 @@ export default async function emailsend(subjectpassed,newSubjectPassed)
       if(newSubjectPassed === true)
       {
         mailOptions = {
-          from: 'private mail@gmail.com',
-          to: 'private mail@gmail.com',
+          from: '@gmail.com',
+          to: `${email}`,
           subject: `ΠΕΡΑΣΕΣ ΤΟ ΜΑΘΗΜΑ ${subjectpassed} `,
           text: 'good job!'
         };
@@ -25,8 +25,8 @@ export default async function emailsend(subjectpassed,newSubjectPassed)
       else
       {
         mailOptions = {
-          from: 'private mail@gmail.com',
-          to: 'private mail@gmail.com',
+          from: '@gmail.com',
+          to: '@gmail.com',
           subject: `ΔΕΝ ΕΧΕΙΣ ΠΕΡΑΣΕΙ ΚΑΠΟΙΟ ΜΑΘΗΜΑ. `,
           text: 'not so good job'
         };

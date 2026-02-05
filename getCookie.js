@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 
 export default async function getFreshCookie(username, password) {
-    console.log("🚀 Starting automated login...");
+    console.log("Starting automated login...");
     
     const browser = await puppeteer.launch({ 
         headless: "new" 

@@ -1,9 +1,6 @@
-import sqlite3 from 'sqlite3';
-
-export default async function insertData(subjects,ispassed,dataLength)
+export default async function insertData(subjects,ispassed,db,dataLength,email)
 {
     
-    const db = new sqlite3.Database('./grades.db');
     const insert = db.prepare('INSERT INTO uni_grades (subject, passed) VALUES (?, ?)');
 
     for(let i=0;i<dataLength;i++) {

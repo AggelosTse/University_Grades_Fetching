@@ -10,12 +10,14 @@ app.use(express.json());
 
 app.post('/fetch-grades', async (req, res) => {
 
-    const semesterChosen = Number(req.body.sem);
+    const username = req.body.userName;
+    const password = req.body.userPassword;
+    const email = req.body.userEmail;
 
-    const freshID = await getFreshCookie("PRIVATE NAME", "PRIVATE PASSWORD");
+    const freshID = await getFreshCookie(`${username}`, `${password}`);
 
     if (freshID) {
-        const data = await getData(semesterChosen, freshID);
+        const data = await getData(freshID, email);
         res.json(data);
     } 
     else {

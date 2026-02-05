@@ -3,19 +3,16 @@
     <head>
     </head>
         <body>
-            <label for="semester">Choose Semester</label>
+            
 
-            <select name="semes" id="semes">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-
-            </select> 
+            <form>
+              <label for="name">DIT username:</label>
+              <input type="text" id="name"><br>
+              <label for="password"> DIT Password:</label>
+              <input type="text" id="pass"><br>
+              <label for="emai;">Email:</label>
+              <input type="text" id="email"><br>
+            </form> 
 
             <input type = "submit" value="Click me" onclick = call()>
             
@@ -26,22 +23,28 @@
 <script>
     async function call() {
 
-        const semesterValue = document.getElementById("semes").value;
         
-        const semester = {
-            sem : semesterValue
+        const name = document.getElementById("name").value;
+        const pass = document.getElementById("pass").value;
+        const email = document.getElementById("email").value;
+
+        const userInfo = {
+          userName : name,
+          userPassword : pass,
+          userEmail : email
         }
 
-        const UImessage = document.getElementById("demo"); 
+
 
         const response = await fetch('http://localhost:3000/fetch-grades', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json' 
             },
-            body: JSON.stringify(semester)
+            body: JSON.stringify(userInfo)
           });
 
+          const UImessage = document.getElementById("demo"); 
 
           if(!response.ok) {
             UImessage.innerHTML = "There was an error.";
@@ -49,26 +52,9 @@
           }
           
           const data = await response.json();
-          console.log(data);
 
           
-          let listofMessages = [];
-
-          for(let i=0;i<data.length;i++)
-          {
-            let msg;
-            if(data[i].ispassed === true)
-            {
-                msg = `Subject ${data[i].subject} is passed\n`;
-            }
-            else
-            {
-                msg = `Subject ${data[i].subject} is not passed\n`;
-            }
-
-            listofMessages.push(msg);
-          }
-          UImessage.innerHTML = listofMessages.join('<br>');    
+          UImessage.innerHTML = data;    
         }
     
 </script>
