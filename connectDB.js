@@ -8,7 +8,7 @@ export default async function connecttoDB(subjects,ispassed,dataLength, email)
   return new Promise(function(resolve, reject){
 
     const db = new sqlite3.Database('./grades.db');
-
+ 
 
     db.get('SELECT COUNT(*) AS count FROM uni_grades', async (err, row) => {
         if (err) {
