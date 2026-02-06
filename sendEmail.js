@@ -16,7 +16,7 @@ export default async function emailsend(subjectpassed,newSubjectPassed, email)
       if(newSubjectPassed === true)
       {
         mailOptions = {
-          from: '@gmail.com',
+          from: '',
           to: `${email}`,
           subject: `ΠΕΡΑΣΕΣ ΤΟ ΜΑΘΗΜΑ ${subjectpassed} `,
           text: 'good job!'
@@ -25,8 +25,8 @@ export default async function emailsend(subjectpassed,newSubjectPassed, email)
       else
       {
         mailOptions = {
-          from: '@gmail.com',
-          to: '@gmail.com',
+          from: '',
+          to: '',
           subject: `ΔΕΝ ΕΧΕΙΣ ΠΕΡΑΣΕΙ ΚΑΠΟΙΟ ΜΑΘΗΜΑ. `,
           text: 'not so good job'
         };

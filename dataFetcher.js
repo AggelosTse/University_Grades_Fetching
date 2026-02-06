@@ -1,6 +1,9 @@
 import connecttoDB from "./connectDB.js";
 
 export default async function getData(fetchID,email) {
+    try{
+
+    
     const response = await fetch('https://classweb.uoi.gr/feign/student/grades/diploma', {
       method: 'GET',
       headers: {
@@ -14,7 +17,7 @@ export default async function getData(fetchID,email) {
     
     });
     if (!response.ok) {
-        return [];
+        throw new Error("Fetching Grades");
     }
 
     const dataFile = await response.json();
@@ -25,11 +28,19 @@ export default async function getData(fetchID,email) {
     {
         subjects.push(dataFile[i].title);
         ispassed.push(dataFile[i].isPassed);
-        //console.log(`index: ${i}, subject: ${subjects[i]}, ispassed: ${ispassed[i]}`);
+       
     }
+    try{
 
     await connecttoDB(subjects,ispassed,dataFile.length, email);
 
+    }catch(error){
+        throw new Error("DB connection");
+    }
+
+    }catch(error){
+        throw error;
+    }
    
 
 

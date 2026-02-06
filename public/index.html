@@ -1,62 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    </head>
-        <body>
-            
+  <head> </head>
+  <body>
+    <form>
+      <label for="name">DIT username:</label>
+      <input type="text" id="name" required /> <br />
+      <label for="password"> DIT Password:</label>
+      <input type="password" id="pass" required /><br />
+      <label for="email">Email:</label>
+      <input type="text" id="email" required /><br />
+    </form>
 
-            <form>
-              <label for="name">DIT username:</label>
-              <input type="text" id="name"><br>
-              <label for="password"> DIT Password:</label>
-              <input type="text" id="pass"><br>
-              <label for="emai;">Email:</label>
-              <input type="text" id="email"><br>
-            </form> 
+    <input type="submit" value="Click me" onclick="call()" />
 
-            <input type = "submit" value="Click me" onclick = call()>
-            
-            <p id = "demo"> ey </p>
-   
+    <p id="demo">ey</p>
 
-
-<script>
-    async function call() {
-
-        
+    <script>
+      async function call() {
         const name = document.getElementById("name").value;
         const pass = document.getElementById("pass").value;
         const email = document.getElementById("email").value;
 
         const userInfo = {
-          userName : name,
-          userPassword : pass,
-          userEmail : email
+          userName: name,
+          userPassword: pass,
+          userEmail: email,
+        };
+
+        const response = await fetch("http://localhost:3000/fetch-grades", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        });
+
+        const UImessage = document.getElementById("demo");
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          UImessage.innerHTML = `Error status: ${response.status}, Error Message: ${data.message}, Error: ${data.error}`;
+          return;
         }
 
-
-
-        const response = await fetch('http://localhost:3000/fetch-grades', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(userInfo)
-          });
-
-          const UImessage = document.getElementById("demo"); 
-
-          if(!response.ok) {
-            UImessage.innerHTML = "There was an error.";
-            return;
-          }
-          
-          const data = await response.json();
-
-          
-          UImessage.innerHTML = data;    
-        }
-    
-</script>
-</body>
+        UImessage.innerHTML = JSON.stringify(data);
+      }
+    </script>
+  </body>
 </html>

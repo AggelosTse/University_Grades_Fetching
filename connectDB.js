@@ -5,24 +5,38 @@ import checkingDiff from './checkingDifferenceDB.js';
 
 export default async function connecttoDB(subjects,ispassed,dataLength, email)
 {
-    
+  return new Promise(function(resolve, reject){
+
     const db = new sqlite3.Database('./grades.db');
+
 
     db.get('SELECT COUNT(*) AS count FROM uni_grades', async (err, row) => {
         if (err) {
-            console.error("Σφάλμα στον έλεγχο:", err.message);
-            return;
+            db.close();
+            reject(new Error("Opening database"));
         }
     
-        if (row.count === 0) {
-          
-            await insertData(subjects,ispassed, db, dataLength, email);
+        try {
+            if (row.count === 0) {
+                await insertData(subjects, ispassed, db, dataLength, email);
+            } else {
+                await checkingDiff(subjects, ispassed, db, dataLength, email);
+            }
+            
+            db.close();
+            resolve(); 
 
-        } else {
-
-            await checkingDiff(subjects,ispassed, db, dataLength, email);
+        } catch (error) {
+         
+            db.close();
+            reject(error);
         }
+
     });
+  })
+           
+          
+        
 
 
 }

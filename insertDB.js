@@ -1,17 +1,30 @@
-export default async function insertData(subjects,ispassed,db,dataLength,email)
-{
-    
-    const insert = db.prepare('INSERT INTO uni_grades (subject, passed) VALUES (?, ?)');
+export default async function insertData(subjects, ispassed, db, dataLength) {
+    return new Promise((resolve, reject) => {
+       
+        db.serialize(function() {
 
-    for(let i=0;i<dataLength;i++) {
+            let insert;
 
-        insert.run(subjects[i], ispassed[i]);
-    }
-    insert.finalize();
-    console.log("success");
-    
+            try {
+                insert = db.prepare('INSERT INTO uni_grades (subject, passed) VALUES (?, ?)');
+            } catch (error) {
+                return reject(new Error("Prepare statement"));
+            }
+
+            for (let i = 0; i < dataLength; i++) {
+
+                insert.run(subjects[i], ispassed[i]);
+            }
+
+           
+            insert.finalize(function(err) {
+                if (err) {
+                    reject(new Error("Finalize statement"));
+                } else {
+                    console.log("Success: All data inserted.");
+                    resolve();
+                }
+            });
+        });
+    });
 }
-
-
-
-
