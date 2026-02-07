@@ -1,6 +1,6 @@
 import express from "express";
-import getData from "./dataFetcher.js";
-import getFreshCookie from "./getCookie.js";
+import getData from "./src/services/dataFetcher.js";
+import getFreshCookie from "./src/services/getCookie.js";
 
 const app = express();
 
@@ -23,7 +23,7 @@ app.post("/fetch-grades", async (req, res) => {
       await getData(freshID, email);
       res.status(200).json({
         type: "Success",
-        message: "Email sent successfully!",
+        message: "No errors occured!",
       });
     }
   } catch (error) {
@@ -114,6 +114,14 @@ app.post("/fetch-grades", async (req, res) => {
         error: "Database parsing",
         message: "Failed to parse data from database",
       });
+
+    if (error.message === "Send Email") {
+      return res.status(501).json({
+        type: "Failure",
+        error: "Send Email",
+        message: "Failed to send email.",
+      });
+    }
   }
 });
 
