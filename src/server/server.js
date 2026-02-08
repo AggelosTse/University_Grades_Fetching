@@ -1,10 +1,16 @@
 import express from "express";
-import getData from "./src/services/dataFetcher.js";
-import getFreshCookie from "./src/services/getCookie.js";
+import getData from "../services/dataFetcher.js";
+import getFreshCookie from "../services/getCookie.js";
+
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(express.static(path.join(__dirname, "../../public")));
 
-app.use(express.static("public"));
 app.use(express.json());
 
 app.post("/fetch-grades", async (req, res) => {
