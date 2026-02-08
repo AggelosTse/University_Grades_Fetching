@@ -32,7 +32,7 @@ export default async function emailsend(
       };
     }
 
-    transporter.sendMail(mailOptions, function (error, info) {
+    transporter.sendMail(mailOptions, function (error) {
       if (error) {
         reject(new Error("Send Email"));
       }

@@ -13,22 +13,22 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
-
   background: var(--bg-gradient);
   font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
 
+/* 1. Increased white box size */
 .container {
   background: var(--glass-bg);
   padding: 50px;
   border-radius: 24px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 450px;
+  max-width: 500px; /* Made bigger as requested */
   text-align: center;
-
-  transform: translateY(-15%);
+  transform: translateY(-5%); /* Adjusted so it doesn't overlap top of browser */
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 h2 {
@@ -47,6 +47,7 @@ h2 {
 .form-group {
   text-align: left;
   margin-bottom: 20px;
+  position: relative; /* Base for labels */
 }
 
 label {
@@ -56,6 +57,13 @@ label {
   margin-bottom: 8px;
   color: var(--text-dark);
   padding-left: 4px;
+}
+
+/* 2. Wrapper to fix the UI breaking (keeps icon inside input area) */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input-element {
@@ -68,10 +76,32 @@ label {
   transition: all 0.2s;
 }
 
+/* Added right padding so text doesn't type behind the eye icon */
+#pass {
+  padding-right: 50px;
+}
+
 .input-element:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+/* 3. Eye Icon styling - positioned relative to the .password-wrapper */
+#togglevisibility {
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+  color: var(--text-light);
+  font-size: 18px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+#togglevisibility:hover {
+  color: var(--primary);
 }
 
 .submit-btn {
@@ -95,11 +125,6 @@ label {
   box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
 }
 
-.submit-btn:active {
-  transform: translateY(0);
-}
-
-/* Response Message */
 #demo {
   margin-top: 25px;
   padding: 15px;
@@ -108,11 +133,15 @@ label {
   display: none;
 }
 
+/* Ensuring messages show up correctly */
+.show { display: block !important; }
+
 .success {
   background: #ecfdf5;
   color: #065f46;
   border: 1px solid #a7f3d0;
 }
+
 .error {
   background: #fef2f2;
   color: #991b1b;

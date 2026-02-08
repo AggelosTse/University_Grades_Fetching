@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   </head>
   <body>
     <div class="container">
@@ -16,7 +17,10 @@
 
         <div class="form-group">
           <label>DIT Password</label>
-          <input type="password" id="pass" class="input-element" required />
+          <div class="password-wrapper">
+            <input type="password" id="pass" class="input-element" required />
+            <i class="fa fa-eye-slash" id="togglevisibility"></i>
+          </div>
         </div>
 
         <div class="form-group">
@@ -37,7 +41,35 @@
     </div>
 
     <script>
+
+
+            const toggleVis = document.getElementById("togglevisibility");
+            const passwordField = document.querySelector('#pass');
+
+            toggleVis.addEventListener('click', function() {
+              const isHidden = passwordField.getAttribute('type') === 'password';
+        
+       
+        passwordField.setAttribute('type', isHidden ? 'text' : 'password');
+        
+        
+        if (isHidden) {
+       
+          this.classList.remove('fa-eye-slash');
+          this.classList.add('fa-eye');
+        } else {
+          
+          this.classList.remove('fa-eye');
+          this.classList.add('fa-eye-slash');
+        }
+      });
+
+
       async function call() {
+        
+       
+
+
         const UImessage = document.getElementById("demo");
         UImessage.style.display = "block";
         UImessage.innerHTML = "Processing...";
@@ -76,6 +108,8 @@
         UImessage.className = "show success";
         UImessage.innerHTML = data.message;
       }
+
+     
     </script>
   </body>
 </html>
