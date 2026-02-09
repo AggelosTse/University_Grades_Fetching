@@ -6,17 +6,30 @@ import { fileURLToPath } from "url";
 import path from "path";
 
 import dotenv from "dotenv";
+import rateLimit from 'express-rate-limit';
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 10, 
+  message: "Too many requests, please try again later."
+});
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
-app.use(express.static(path.join(__dirname, "../../public")));
-
-app.use(express.json());
 
 dotenv.config({ path: path.resolve(__dirname, "../../hidden.env") });
-const port = process.env.PORT;
+
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "../../public")));
+app.use("/fetch-grades", limiter);
+
+
 
 app.post("/fetch-grades", async (req, res) => {
   try {
@@ -27,7 +40,7 @@ app.post("/fetch-grades", async (req, res) => {
     if (!username || !password || !email) {
       throw new Error("Missing info");
     }
-
+    if (!email.includes("@")) throw new Error("Email type");
     const freshID = await getFreshCookie(`${username}`, `${password}`);
 
     if (freshID) {
@@ -116,7 +129,15 @@ app.post("/fetch-grades", async (req, res) => {
         error: "Send Email",
         message: "Failed to send email.",
       });
-    } else {
+    }
+    else if((error.message === "Email type")){
+      return res.status(501).json({
+        type: "Failure",
+        error: "Invalid Email type",
+        message: "Please use @",
+      });
+    } 
+    else {
       return res.status(501).json({
         type: "Failure",
         error: "Unexpected Error",
