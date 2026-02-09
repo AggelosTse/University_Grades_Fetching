@@ -2,25 +2,25 @@ import connecttoDB from "../database/connectDB.js";
 
 export default async function getData(fetchID, email) {
   try {
-    const response = await fetch(
-      "https://classweb.uoi.gr/feign/student/grades/diploma",
-      {
-        method: "GET",
-        headers: {
-          Cookie: `JSESSIONID=${fetchID}`,
-          Accept: "application/json",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Firefox/122.0",
-          Referer: "https://classweb.uoi.gr/student/grades",
-          "X-Requested-With": "XMLHttpRequest",
-        },
-      }
-    );
+    const ditgradesURL = process.env.GRADES_API;
+    const response = await fetch(ditgradesURL, {
+      method: "GET",
+      headers: {
+        Cookie: `JSESSIONID=${fetchID}`,
+        Accept: "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Firefox/122.0",
+        Referer: "https://classweb.uoi.gr/student/grades",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    });
     if (!response.ok) {
       throw new Error("Fetching Grades");
     }
 
     const dataFile = await response.json();
+    if (!Array.isArray(dataFile)) {
+      throw new Error("Fetching Grades");
+    }
     let subjects = [];
     let ispassed = [];
 

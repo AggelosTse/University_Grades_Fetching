@@ -16,7 +16,7 @@ export default async function connecttoDB(
   email
 ) {
   return new Promise(function (resolve, reject) {
-    const dbPath = path.join(__dirname, "../../grades.db");
+    const dbPath = path.join(__dirname, process.env.DB_PATH);
     const db = new sqlite3.Database(dbPath);
 
     db.get(

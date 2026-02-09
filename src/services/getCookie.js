@@ -1,8 +1,6 @@
 import puppeteer from "puppeteer";
 
 export default async function getFreshCookie(username, password) {
-  console.log("Starting dit login");
-
   const browser = await puppeteer.launch({
     headless: "new",
     args: [
@@ -19,7 +17,8 @@ export default async function getFreshCookie(username, password) {
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     );
 
-    await page.goto("https://classweb.uoi.gr/login", {
+    const ditloginURL = process.env.LOGIN_URL;
+    await page.goto(ditloginURL, {
       waitUntil: "networkidle2",
       timeout: 30000,
     });
@@ -40,11 +39,7 @@ export default async function getFreshCookie(username, password) {
         .catch(() => {}),
     ]);
 
-    const currentUrl = page.url();
-
     if (page.url().includes("/login")) {
-      console.log("Auth failed detected.");
-      await browser.close();
       throw new Error("Invalid Credentials");
     }
 

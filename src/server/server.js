@@ -5,6 +5,8 @@ import getFreshCookie from "../services/getCookie.js";
 import { fileURLToPath } from "url";
 import path from "path";
 
+import dotenv from "dotenv";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -12,6 +14,9 @@ const app = express();
 app.use(express.static(path.join(__dirname, "../../public")));
 
 app.use(express.json());
+
+dotenv.config({ path: path.resolve(__dirname, "../../hidden.env") });
+const port = process.env.PORT;
 
 app.post("/fetch-grades", async (req, res) => {
   try {
@@ -39,96 +44,86 @@ app.post("/fetch-grades", async (req, res) => {
         error: "Missing input",
         message: "Some input is missing",
       });
-    }
-
-    if (error.message === "Invalid Credentials") {
+    } else if (error.message === "Invalid Credentials") {
       return res.status(500).json({
         type: "Failure",
         error: "Invalid DIT account or name",
         message: "Failed to login on DIT uoi",
       });
-    }
-
-    if (error.message === "Failed to fetch grades") {
+    } else if (error.message === "Failed to fetch grades") {
       return res.status(502).json({
         type: "Failure",
         error: "Internal Server Error",
         message: "Failed to fetch grades",
       });
-    }
-
-    if (error.message === "Opening database") {
+    } else if (error.message === "Opening database") {
       return res.status(500).json({
         type: "Failure",
         error: "Database Open error",
         message: "Couldnt open datbase",
       });
-    }
-    if (error.message === "Finding JSESSID") {
+    } else if (error.message === "Finding JSESSID") {
       return res.status(500).json({
         type: "Failure",
         error: "JSESSID failed",
         message: "DIT login success, jsessid capture failed",
       });
-    }
-    if (error.message === "Fetching Grades") {
+    } else if (error.message === "Fetching Grades") {
       return res.status(500).json({
         type: "Failure",
         error: "Fetching Grades",
         message: "Failed to fetch grades from DIT",
       });
-    }
-
-    if (error.message === "DB connection")
+    } else if (error.message === "DB connection")
       return res.status(501).json({
         type: "Failure",
         error: "Database Connection",
         message: "Couldnt connect to database",
       });
-
-    if (error.message === "Opening database")
+    else if (error.message === "Opening database")
       return res.status(501).json({
         type: "Failure",
         error: "Opening Database",
         message: "Couldnt open database",
       });
-
-    if (error.message === "Prepare statement")
+    else if (error.message === "Prepare statement")
       return res.status(501).json({
         type: "Failure",
         error: "Prepare Statement",
         message: "Failed to prepare database insert statement",
       });
-
-    if (error.message === "Finalize statement")
+    else if (error.message === "Finalize statement")
       return res.status(501).json({
         type: "Failure",
         error: "Finalize statement",
         message: "Failed to finilize database insert statement",
       });
-
-    if (error.message === "Commit DB")
+    else if (error.message === "Commit DB")
       return res.status(501).json({
         type: "Failure",
         error: "Commit Database",
         message: "Failed to Commit changed to database",
       });
-
-    if (error.message === "Parsing DB")
+    else if (error.message === "Parsing DB")
       return res.status(501).json({
         type: "Failure",
         error: "Database parsing",
         message: "Failed to parse data from database",
       });
-
-    if (error.message === "Send Email") {
+    else if (error.message === "Send Email") {
       return res.status(501).json({
         type: "Failure",
         error: "Send Email",
         message: "Failed to send email.",
       });
+    } else {
+      return res.status(501).json({
+        type: "Failure",
+        error: "Unexpected Error",
+        message: "Unexpected error occured",
+      });
     }
   }
 });
 
-app.listen(3000);
+app.listen(port);
