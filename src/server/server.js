@@ -2,6 +2,8 @@ import express from "express";
 import getData from "../services/dataFetcher.js";
 import getFreshCookie from "../services/getCookie.js";
 
+import cron from 'node-cron';
+
 import { fileURLToPath } from "url";
 import path from "path";
 
@@ -148,3 +150,21 @@ app.post("/fetch-grades", async (req, res) => {
 });
 
 app.listen(port);
+
+cron.schedule("*/1 * * * *", async () => {
+  try {    
+    const ditname = process.env.ditusername; 
+    const ditpass = process.env.ditpassword;
+    const email = process.env.email;
+
+    
+    const freshID = await getFreshCookie(ditname, ditpass);
+
+    if (freshID) {
+      await getData(freshID, email);
+      
+    }
+  } catch (error) {
+    console.error("❌ Σφάλμα στο αυτόματο loop:", error.message);
+  }
+});
