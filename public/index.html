@@ -4,43 +4,29 @@
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
   </head>
   <body>
     <div class="container">
       <h2>DIT Grades</h2>
-      <p class="subtitle">Enter your credentials</p>
-
-      <form>
-        <div class="form-group">
-          <label>DIT Username</label>
-          <input type="text" id="name" class="input-element" required />
-        </div>
-
-        <div class="form-group">
-          <label>DIT Password</label>
-          <div class="password-wrapper">
-            <input type="password" id="pass" class="input-element" required />
-            <i class="fa fa-eye-slash" id="togglevisibility"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Notification Email</label>
-          <input type="email" id="email" class="input-element" required />
-        </div>
+      <p class="subtitle">University grades automation</p>
 
         <input
           type="button"
           class="submit-btn"
-          id="btn"
-          value="Start Connection"
-          onclick="call()"
+          id="Yesbutton"
+          value="Start automation"
+          onclick="call('yes')"
         />
-      </form>
-
-      <div id="demo"></div>
+        <input
+          type="button"
+          class="submit-btn"
+          id="Nobutton"
+          value="End automation"
+          onclick="call('no')"
+        />
+  
+        <p id="demo"></p>
     </div>
 
     <script src="script.js"></script>

@@ -46,65 +46,7 @@ h2 {
   font-size: 16px;
 }
 
-.form-group {
-  text-align: left;
-  margin-bottom: 20px;
-  position: relative; 
-}
 
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text-dark);
-  padding-left: 4px;
-}
-
-
-.password-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-element {
-  width: 100%;
-  padding: 14px 18px;
-  font-size: 16px;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  box-sizing: border-box;
-  transition: all 0.2s;
-}
-
-
-#pass {
-  padding-right: 50px;
-}
-
-.input-element:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-}
-
-
-#togglevisibility {
-  position: absolute;
-  right: 15px;
-  cursor: pointer;
-  color: var(--text-light);
-  font-size: 18px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  transition: color 0.2s;
-}
-
-#togglevisibility:hover {
-  color: var(--primary);
-}
 
 .submit-btn {
   width: 100%;
