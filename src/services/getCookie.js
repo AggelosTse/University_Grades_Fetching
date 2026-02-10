@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-export default async function getFreshCookie(username, password) {
+export default async function getFreshCookie() {
   const browser = await puppeteer.launch({
     headless: "new",
     args: [
@@ -25,8 +25,10 @@ export default async function getFreshCookie(username, password) {
 
     await page.waitForSelector("#username", { timeout: 10000 });
 
-    await page.type("#username", username);
-    await page.type("#password", password);
+    const ditname = process.env.ditusername;
+    const ditpass = process.env.ditpassword;
+    await page.type("#username", ditname);
+    await page.type("#password", ditpass);
 
     const submitSelector =
       'input[type="submit"], button[type="submit"], .btn-primary, button.btn';
@@ -50,7 +52,7 @@ export default async function getFreshCookie(username, password) {
       console.log("Success: Captured authenticated JSESSIONID");
       return jsession.value;
     } else {
-      throw new Error("JSESSID failed");
+      throw new Error("Failed to catch JSESSID");
     }
   } catch (error) {
     throw error;

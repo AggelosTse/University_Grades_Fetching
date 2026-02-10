@@ -5,8 +5,7 @@ export default async function checkingDiff(
   subjects,
   ispassed,
   db,
-  DataLength,
-  email
+  DataLength
 ) {
   return await new Promise(function (resolve, reject) {
     db.all("SELECT subject,passed FROM uni_grades", async function(err, rows){
@@ -36,8 +35,8 @@ export default async function checkingDiff(
           }
         }
 
-        await emailsend(subjects[subjectPassedindex], newSubjectPassed, email);
-        await updateDB(subjects, ispassed, db, DataLength, email);
+        await emailsend(subjects[subjectPassedindex], newSubjectPassed);
+        await updateDB(subjects, ispassed, db, DataLength);
 
         resolve();
       } catch (error) {

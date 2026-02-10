@@ -12,8 +12,7 @@ const __dirname = path.dirname(__filename);
 export default async function connecttoDB(
   subjects,
   ispassed,
-  dataLength,
-  email
+  dataLength
 ) {
   return new Promise(function (resolve, reject) {
     const dbPath = path.join(__dirname, process.env.DB_PATH);
@@ -29,9 +28,9 @@ export default async function connecttoDB(
 
         try {
           if (row.count === 0) {
-            await insertData(subjects, ispassed, db, dataLength, email);
+            await insertData(subjects, ispassed, db, dataLength);
           } else {
-            await checkingDiff(subjects, ispassed, db, dataLength, email);
+            await checkingDiff(subjects, ispassed, db, dataLength);
           }
 
           db.close();

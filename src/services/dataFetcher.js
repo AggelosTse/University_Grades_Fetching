@@ -1,6 +1,6 @@
 import connecttoDB from "../database/connectDB.js";
 
-export default async function getData(fetchID, email) {
+export default async function getData(fetchID) {
   try {
     const ditgradesURL = process.env.GRADES_API;
     const response = await fetch(ditgradesURL, {
@@ -29,7 +29,7 @@ export default async function getData(fetchID, email) {
       ispassed.push(dataFile[i].isPassed);
     }
 
-    await connecttoDB(subjects, ispassed, dataFile.length, email);
+    await connecttoDB(subjects, ispassed, dataFile.length);
   } catch (error) {
     throw error;
   }
