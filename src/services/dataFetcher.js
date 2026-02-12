@@ -1,7 +1,11 @@
 import connecttoDB from "../database/connectDB.js";
 
+
+
 export default async function getData(fetchID) {
   try {
+
+    //fetching grades data from university api
     const ditgradesURL = process.env.GRADES_API;
     const response = await fetch(ditgradesURL, {
       method: "GET",
@@ -24,6 +28,7 @@ export default async function getData(fetchID) {
     let subjects = [];
     let ispassed = [];
 
+    
     for (let i = 0; i < dataFile.length; i++) {
       subjects.push(dataFile[i].title);
       ispassed.push(dataFile[i].isPassed);

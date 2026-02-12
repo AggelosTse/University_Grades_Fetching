@@ -10,6 +10,7 @@ import path from "path";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
+//ddos prevent
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
@@ -34,9 +35,14 @@ let crontask = null;
 app.post("/startAutomation", async function (req, res) {
   if (!crontask) {
     try {
+      //login to dit, get jsessid
       const freshID = await getFreshCookie();
+
+      //get subjects data
       if (freshID) await getData(freshID);
-      crontask = cron.schedule("*0 * * * *", async function () {
+
+      //run every 2 hours
+      crontask = cron.schedule("0 * * * *", async function () {
         try {
           const freshID = await getFreshCookie();
           if (freshID) await getData(freshID);
@@ -131,7 +137,7 @@ app.post("/startAutomation", async function (req, res) {
         return res.status(501).json({
           type: "Failure",
           error: "Unexpected Error",
-          message: "Unexpected error occured",
+          message: error.message,
         });
       }
     }
@@ -167,4 +173,4 @@ app.post("/stopAutomation", async function (req, res) {
     });
   }
 });
-app.listen(port);
+app.listen(port, '0.0.0.0');

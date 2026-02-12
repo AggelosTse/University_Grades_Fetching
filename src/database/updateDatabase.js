@@ -3,9 +3,12 @@ export default function updateDB(subjects, ispassed, db, dataLength) {
     db.serialize(function () {
       db.run("BEGIN TRANSACTION");
 
+      //remove old data from database
       db.run("DELETE FROM uni_grades");
 
       let insert;
+
+      //add new data 
 
       try {
         insert = db.prepare(
@@ -24,6 +27,7 @@ export default function updateDB(subjects, ispassed, db, dataLength) {
           return reject(new Error("Finalize statement"));
         }
       });
+      
 
       db.run("COMMIT", (err) => {
         if (err) {

@@ -22,12 +22,10 @@ async function call(boolAutomation) {
     if (data.type === "Failure") {
       UImessage.className = "show error";
       UImessage.innerHTML = data.message;
-    }
-    else{
+    } else {
       UImessage.className = "show success";
       UImessage.innerHTML = data.message;
     }
-  
   } else {
     const response = await fetch("/stopAutomation", {
       //automation stop trigger request
@@ -36,17 +34,16 @@ async function call(boolAutomation) {
 
     const data = await response.json();
 
+    //printing messages on screen as a response
     if (data.type === "Failure") {
       UImessage.className = "show error";
       UImessage.innerHTML = data.message;
-
-    }
-    else{
+    } else {
       UImessage.className = "show success";
       UImessage.innerHTML = data.message;
     }
-    
   }
+  //button cooldown 10s
   setTimeout(function () {
     yesbutton.disabled = false;
     nobutton.disabled = false;

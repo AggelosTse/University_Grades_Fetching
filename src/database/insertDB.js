@@ -11,6 +11,7 @@ export default async function insertData(subjects, ispassed, db, dataLength) {
         return reject(new Error("Prepare statement"));
       }
 
+      //storing the new data in the database
       for (let i = 0; i < dataLength; i++) {
         insert.run(subjects[i], ispassed[i]);
       }

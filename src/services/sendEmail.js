@@ -1,12 +1,13 @@
 import nodemailer from "nodemailer";
 
-export default async function emailsend(
-  subjectpassed,
-  newSubjectPassed
-) {
+export default async function emailsend(subjectpassed, newSubjectPassed) {
   const adminEmail = process.env.EMAIL_ADMIN;
   const myPass = process.env.EMAIL_PASS;
   const userEmail = process.env.EMAIL_USER;
+
+  if (!newSubjectPassed) {
+    return; 
+  }
 
   return new Promise(function (resolve, reject) {
     let transporter = nodemailer.createTransport({
@@ -17,27 +18,17 @@ export default async function emailsend(
       },
     });
 
-    let mailOptions;
+    const mailOptions = {
+      from: adminEmail,
+      to: userEmail,
+      subject: `ΠΕΡΑΣΕΣ ΤΟ ΜΑΘΗΜΑ ${subjectpassed}`,
+      text: "Good job!",
+    };
 
-    if (newSubjectPassed === true) {
-      mailOptions = {
-        from: adminEmail,
-        to: userEmail,
-        subject: `ΠΕΡΑΣΕΣ ΤΟ ΜΑΘΗΜΑ ${subjectpassed} `,
-        text: "good job!",
-      };
-    } else {
-      mailOptions = {
-        from: adminEmail,
-        to: userEmail,
-        subject: `ΔΕΝ ΕΧΕΙΣ ΠΕΡΑΣΕΙ ΚΑΠΟΙΟ ΜΑΘΗΜΑ. `,
-        text: "not so good job",
-      };
-    }
-
-    transporter.sendMail(mailOptions, function (error) {
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        reject(new Error("Failed to send Email"));
+        console.error("Nodemailer Error:", error.message);
+        return reject(new Error("Send Email")); 
       }
       resolve();
     });
