@@ -25,4 +25,5 @@ A university grades fetching project built with Express.js and SQLite.
 - Pupeteer for my university web scrape (for account validation)
 
 
-NOTE: IT ONLY WORKS FOR MY PERSONAL UNIVERSITY ACCOUNT
+
+## NOTE: IT ONLY WORKS FOR MY PERSONAL UNIVERSITY ACCOUNT
