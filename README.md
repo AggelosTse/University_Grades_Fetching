@@ -6,24 +6,40 @@ A university grades fetching project built with Express.js and SQLite.
 
 ## Features
 
-- Fetches university grades automatically  
-- Runs every 1 hour after clicking "Start Automation"
-- Stores all fetched data in a SQLite database  
-- Sends email notification when a subject is passed  
-- Continuous background automation  
+-  Secure login automation using Puppeteer  
+-  Automatic grade fetching from university portal  
+-  Scheduled execution every 1 hour (Cron job)  
+-  Persistent storage using SQLite  
+-  Email notification when a subject is passed  
+-  Hosted on AWS server  
+-  Continuous background execution with PM2  
 
 ---
 
 ## Tech Stack
 
-- Node.js
-- Express.js
-- SQLite
-- Nodemailer (for email notifications)
-- Cron (for hourly automation)
-- Hosted in AWS server
-- Pupeteer for my university web scrape (for account validation)
+- **Node.js**
+- **Express.js**
+- **SQLite**
+- **Puppeteer** (web scraping & session automation)
+- **Nodemailer** (email notifications)
+- **node-cron** (task scheduling)
+- **AWS EC2** (deployment)
+- **PM2** (process manager for uptime & reliability)
+- 
+---
 
+## Deployment
 
+The application is:
+
+- Deployed on an **AWS EC2 server**
+- Managed using **PM2** to ensure:
+  - Automatic restarts on crash
+  - Background execution
+  - Log management
+  - High availability
+
+---
 
 ## NOTE: IT ONLY WORKS FOR MY PERSONAL UNIVERSITY ACCOUNT
