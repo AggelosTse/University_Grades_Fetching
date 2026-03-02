@@ -26,7 +26,7 @@ A university grades fetching project built with Express.js and SQLite.
 - **node-cron** (task scheduling)
 - **AWS EC2** (deployment)
 - **PM2** (process manager for uptime & reliability)
-- 
+  
 ---
 
 ## Deployment
