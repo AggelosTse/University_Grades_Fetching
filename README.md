@@ -42,4 +42,36 @@ The application is:
 
 ---
 
-## NOTE: IT ONLY WORKS FOR MY PERSONAL UNIVERSITY ACCOUNT
+## How to Use
+
+Follow these steps to configure, run, and host the automation script for your own account.
+
+### 1. Prerequisites
+Ensure you have Node.js installed, then clone the repository and install the required core dependencies (including `sqlite3`, `puppeteer`, `nodemailer`, and `node-cron`):
+
+```bash
+npm install
+```
+
+### 2. Configuration (`hidden.env`)
+Add your data in the file named `hidden.env` in the **root directory** of the project. This file stores your private university credentials and email authentication data. 
+
+Populate it with your details exactly as shown below:
+
+```text
+PORT=3000
+DB_PATH=../../grades.db
+LOGIN_URL=https://classweb.uoi.gr/login
+
+# Your University Portal Credentials
+ditusername="YOUR_UOI_USERNAME"
+ditpassword="YOUR_UOI_PASSWORD"
+
+# Email Configuration (Nodemailer)
+EMAIL_ADMIN="YOUR_GMAIL_ADDRESS@gmail.com"
+EMAIL_PASS="XXXX XXXX XXXX XXXX"
+EMAIL_USER="RECEIVER_EMAIL_ADDRESS@gmail.com"
+
+> 🔴 **IMPORTANT: CRITICAL SECURITY STEP**
+> **DO NOT** use your actual Gmail password for `EMAIL_PASS`. 
+> You **must** generate and use a **Google App Password** instead.
