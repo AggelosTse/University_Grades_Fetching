@@ -75,3 +75,18 @@ EMAIL_USER="RECEIVER_EMAIL_ADDRESS@gmail.com"
 > 🔴 **IMPORTANT: CRITICAL SECURITY STEP**
 > **DO NOT** use your actual Gmail password for `EMAIL_PASS`. 
 > You **must** generate and use a **Google App Password** instead.
+```
+### 3. Local Execution (Development Mode)
+To launch the Express server manually and monitor its execution in your active terminal session:
+
+```bash
+# Navigate to the server folder
+cd src/server
+
+# Start the application using Node.js
+node server.js
+
+# Open a browser and type in URL
+http://localhost:3000
+
+# Click "Start Automation" and let it open
