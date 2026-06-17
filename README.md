@@ -89,4 +89,4 @@ node server.js
 # Open a browser and type in URL
 http://localhost:3000
 
-# Click "Start Automation" and let it open
+# Click "Start Automation"
