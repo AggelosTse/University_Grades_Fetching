@@ -3,15 +3,14 @@ import updateDB from "./updateDatabase.js";
 
 export default async function checkingDiff(subjects, ispassed, db, DataLength) {
   return await new Promise(function (resolve, reject) {
+    //get all subjects from database
     db.all("SELECT subject,passed FROM uni_grades", async function (err, rows) {
-      if (err) {
-        return reject(new Error("Parsing DB"));
-      }
+      if (err) return reject(new Error("Parsing DB"));
 
       try {
-        //storing data that already exist in the database
-        const previousSubject = rows.map((row) => row.subject);
-        const previousPassed = rows.map((row) => row.passed);
+        //getting data from database
+        const previousSubject = rows.map((row) => row.subject); //every subject
+        const previousPassed = rows.map((row) => row.passed); //passed (0 or 1) for every subject
 
         let subjectPassedindex;
         let newSubjectPassed = false;

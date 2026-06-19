@@ -20,6 +20,7 @@ const limiter = rateLimit({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+//find env file
 dotenv.config({ path: path.resolve(__dirname, "../../hidden.env") });
 
 const app = express();

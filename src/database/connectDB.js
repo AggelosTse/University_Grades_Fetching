@@ -25,11 +25,11 @@ export default async function connecttoDB(subjects, ispassed, dataLength) {
         }
 
         try {
+          //if empty insert data
           if (row.count === 0) {
-            //if empty insert data
             await insertData(subjects, ispassed, db, dataLength);
+          //if not empty check for differences
           } else {
-            //if not empty check for differences
             await checkingDiff(subjects, ispassed, db, dataLength);
           }
 

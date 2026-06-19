@@ -8,8 +8,7 @@ export default function updateDB(subjects, ispassed, db, dataLength) {
 
       let insert;
 
-      //add new data 
-
+      //add new data
       try {
         insert = db.prepare(
           "INSERT INTO uni_grades (subject, passed) VALUES (?, ?)"
@@ -27,15 +26,12 @@ export default function updateDB(subjects, ispassed, db, dataLength) {
           return reject(new Error("Finalize statement"));
         }
       });
-      
 
       db.run("COMMIT", (err) => {
         if (err) {
-          console.error("error in commit:", err);
           db.run("ROLLBACK");
           return reject(new Error("Commit DB"));
         }
-        console.log("Database updated successfully");
         resolve();
       });
     });

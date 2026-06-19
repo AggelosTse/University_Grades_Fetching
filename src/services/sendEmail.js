@@ -5,9 +5,7 @@ export default async function emailsend(subjectpassed, newSubjectPassed) {
   const myPass = process.env.EMAIL_PASS;
   const userEmail = process.env.EMAIL_USER;
 
-  if (!newSubjectPassed) {
-    return; 
-  }
+  if (!newSubjectPassed) return;
 
   return new Promise(function (resolve, reject) {
     let transporter = nodemailer.createTransport({
@@ -26,10 +24,7 @@ export default async function emailsend(subjectpassed, newSubjectPassed) {
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.error("Nodemailer Error:", error.message);
-        return reject(new Error("Send Email")); 
-      }
+      if (error) return reject(new Error("Send Email"));
       resolve();
     });
   });
